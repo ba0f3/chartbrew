@@ -28,11 +28,13 @@ const {
 
 const openAiKey = process.env.NODE_ENV === "production" ? process.env.CB_OPENAI_API_KEY : process.env.CB_OPENAI_API_KEY_DEV;
 const openAiModel = process.env.NODE_ENV === "production" ? process.env.CB_OPENAI_MODEL : process.env.CB_OPENAI_MODEL_DEV;
+const openAiBaseUrl = process.env.CB_OPENAI_BASE_URL;
 let openaiClient;
 
 if (openAiKey) {
   openaiClient = new OpenAI({
     apiKey: openAiKey,
+    ...(openAiBaseUrl ? { baseURL: openAiBaseUrl } : {}),
   });
 }
 
