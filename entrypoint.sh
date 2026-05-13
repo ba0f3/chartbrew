@@ -25,8 +25,8 @@ cd server
 NODE_ENV=production node index.js &
 api_pid="$!"
 
-cd ../client
-# mkdir -p dist
+# Rebuild the UI in the background so runtime Vite env vars take effect
+( cd client && echo "The UI is rebuilding. Please wait..." && npm run build && echo "UI built successfully!" ) &
 
 # Build the UI in the background
 # sh -c 'echo "The UI is rebuilding. Please wait..." && npm run build && echo "UI built successfully!" && cp -rf build/* dist/' &
