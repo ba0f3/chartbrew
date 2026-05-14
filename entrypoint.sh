@@ -26,4 +26,4 @@ if [ ! -f dist/index.html ]; then
 fi
 
 # Serve the UI
-npx serve -s dist -l tcp://0.0.0.0:${VITE_APP_CLIENT_PORT}
+npx serve -s dist -l "tcp://0.0.0.0:${VITE_APP_CLIENT_PORT}"

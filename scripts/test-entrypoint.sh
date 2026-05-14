@@ -24,13 +24,13 @@ line_number() {
 }
 
 require_line "^set -euo pipefail$" "entrypoint.sh must fail fast with set -euo pipefail"
-require_line "VITE_APP_API_HOST:\\?VITE_APP_API_HOST is required" "entrypoint.sh must clearly require VITE_APP_API_HOST"
-require_line "VITE_APP_CLIENT_HOST:\\?VITE_APP_CLIENT_HOST is required" "entrypoint.sh must clearly require VITE_APP_CLIENT_HOST"
-require_line "VITE_APP_CLIENT_PORT:\\?VITE_APP_CLIENT_PORT is required" "entrypoint.sh must clearly require VITE_APP_CLIENT_PORT"
-require_line "VITE_APP_ONE_ACCOUNT_EXTERNAL_ID:-" "entrypoint.sh must allow optional one-account configuration to be unset"
+require_line "^:[[:space:]]+\"\\$\\{VITE_APP_API_HOST:\\?VITE_APP_API_HOST is required\\}\"$" "entrypoint.sh must clearly require VITE_APP_API_HOST"
+require_line "^:[[:space:]]+\"\\$\\{VITE_APP_CLIENT_HOST:\\?VITE_APP_CLIENT_HOST is required\\}\"$" "entrypoint.sh must clearly require VITE_APP_CLIENT_HOST"
+require_line "^:[[:space:]]+\"\\$\\{VITE_APP_CLIENT_PORT:\\?VITE_APP_CLIENT_PORT is required\\}\"$" "entrypoint.sh must clearly require VITE_APP_CLIENT_PORT"
+require_line "^export[[:space:]]+VITE_APP_ONE_ACCOUNT_EXTERNAL_ID=\\$\\{VITE_APP_ONE_ACCOUNT_EXTERNAL_ID:-\\}$" "entrypoint.sh must allow optional one-account configuration to be unset"
 require_line "npm run build" "entrypoint.sh must build the client before serving it"
 require_line "dist/index\\.html" "entrypoint.sh must verify dist/index.html exists"
-require_line "npx serve -s dist -l tcp://0\\.0\\.0\\.0:\\$\\{VITE_APP_CLIENT_PORT\\}" "entrypoint.sh must bind serve to 0.0.0.0 with SPA fallback"
+require_line "npx serve -s dist -l \"tcp://0\\.0\\.0\\.0:\\$\\{VITE_APP_CLIENT_PORT\\}\"" "entrypoint.sh must bind serve to 0.0.0.0 with SPA fallback"
 
 if grep -Eq "nohup .*npm run build|npm run build.*&" "$ENTRYPOINT"; then
   echo "entrypoint.sh must not run the client build in the background" >&2
