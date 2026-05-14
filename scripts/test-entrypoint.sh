@@ -28,15 +28,15 @@ require_line "^:[[:space:]]+\"\\$\\{VITE_APP_API_HOST:\\?VITE_APP_API_HOST is re
 require_line "^:[[:space:]]+\"\\$\\{VITE_APP_CLIENT_HOST:\\?VITE_APP_CLIENT_HOST is required\\}\"$" "entrypoint.sh must clearly require VITE_APP_CLIENT_HOST"
 require_line "^:[[:space:]]+\"\\$\\{VITE_APP_CLIENT_PORT:\\?VITE_APP_CLIENT_PORT is required\\}\"$" "entrypoint.sh must clearly require VITE_APP_CLIENT_PORT"
 require_line "^export[[:space:]]+VITE_APP_ONE_ACCOUNT_EXTERNAL_ID=\\$\\{VITE_APP_ONE_ACCOUNT_EXTERNAL_ID:-\\}$" "entrypoint.sh must allow optional one-account configuration to be unset"
-require_line "npm run build" "entrypoint.sh must build the client before serving it"
-require_line "dist/index\\.html" "entrypoint.sh must verify dist/index.html exists"
-require_line "npx serve -s dist -l \"tcp://0\\.0\\.0\\.0:\\$\\{VITE_APP_CLIENT_PORT\\}\"" "entrypoint.sh must bind serve to 0.0.0.0 with SPA fallback"
-require_line 'server_pid=\$!' "entrypoint.sh must capture the server process id"
-require_line 'client_pid=\$!' "entrypoint.sh must capture the client process id"
-require_line 'wait -n "\$server_pid" "\$client_pid"' "entrypoint.sh must exit when either server or client process exits"
-require_line 'kill "\$server_pid" "\$client_pid"' "entrypoint.sh must clean up the remaining process when one side exits"
+require_line "^\\s*(?!#)npm run build\\b" "entrypoint.sh must build the client before serving it"
+require_line "^\\s*(?!#)dist/index\\.html" "entrypoint.sh must verify dist/index.html exists"
+require_line "^\\s*(?!#)npx serve -s dist -l \"tcp://0\\.0\\.0\\.0:\\$\\{VITE_APP_CLIENT_PORT\\}\"" "entrypoint.sh must bind serve to 0.0.0.0 with SPA fallback"
+require_line '^\\s*(?!#)server_pid=\\$!' "entrypoint.sh must capture the server process id"
+require_line '^\\s*(?!#)client_pid=\\$!' "entrypoint.sh must capture the client process id"
+require_line '^\\s*(?!#)wait -n "\\$server_pid" "\\$client_pid"' "entrypoint.sh must exit when either server or client process exits"
+require_line '^\\s*(?!#)kill "\\$server_pid" "\\$client_pid"' "entrypoint.sh must clean up the remaining process when one side exits"
 
-if grep -Eq "nohup .*npm run build|npm run build.*&" "$ENTRYPOINT"; then
+if grep -Eq "nohup .*npm run build|npm run build.*[^&]&" "$ENTRYPOINT"; then
   echo "entrypoint.sh must not run the client build in the background" >&2
   exit 1
 fi
