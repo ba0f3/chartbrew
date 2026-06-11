@@ -90,7 +90,7 @@
     "tunnel-ssh": "^5.2.0",
     "umzug": "^3.7.0",
     "uninstall": "*",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.0.0",
