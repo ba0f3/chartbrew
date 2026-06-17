@@ -50,7 +50,7 @@
     "crypto-js": "^4.2.0",
     "date-fns": "^3.3.1",
     "dotenv": "^16.0.3",
-    "ejs": "^3.1.8",
+    "ejs": "^6.0.1",
     "express": "^5.1.0",
     "express-rate-limit": "^8.1.0",
     "firebase-admin": "^13.8.0",
@@ -90,7 +90,7 @@
     "tunnel-ssh": "^5.2.0",
     "umzug": "^3.7.0",
     "uninstall": "*",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.0.0",
@@ -101,7 +101,7 @@
     "oxlint": "^1.58.0",
     "sqlite3": "^6.0.1",
     "supertest": "^7.1.4",
-    "testcontainers": "^11.6.0",
+    "testcontainers": "^12.0.2",
     "vitest": "^4.1.5"
   }
 }
